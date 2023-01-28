@@ -1,23 +1,22 @@
 const express = require("express")
-const { UserModel } = require("./Models/quiz.model")
-const { Connection } = require("./config/db")
-const PORT = process.env.PORT || 8000
 const cors = require('cors')
+const { Connection } = require("./config/db")
+const { UserModel } = require("./Models/quiz.model")
+const PORT = process.env.PORT || 8000
 
 const app = express()
-
 app.use(cors())
 app.use(express.json())
 require("dotenv").config()
 
 app.get('/', (req, res) => {
-    res.send('hey i am running!')
+    res.send('Welcome')
 })
 app.post("/quiz", async (req, res) => {
-    const {type, category, difficulty, question, correct_answer, incorrect_answers } = req.body;
+    const { category, type, difficulty, question, correct_answer, incorrect_answers } = req.body;
     const newquestion = new QuizModel({
-        type: type,
         category: category,
+        type: type,
         difficulty: difficulty,
         question: question,
         correct_answer: correct_answer,
@@ -38,11 +37,11 @@ app.get("/quiz", async (req, res) => {
 app.listen(PORT, async () => {
     try {
         await Connection
-        console.log("Successfully Connected to DB");
+        console.log("Connected to DB");
     }
     catch (err) {
-        console.log("connecting error");
+        console.log("error in connectiong");
         console.log(err);
     }
-    console.log(`Listenging on PORT http://localhost:${PORT}`);
+    console.log(`Listenging to PORT http://localhost:${PORT}`);
 })
